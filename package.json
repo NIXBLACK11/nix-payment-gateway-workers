@@ -1,0 +1,25 @@
+{
+  "name": "nix-payment-gateway-workers",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx tsc",
+    "start": "concurrently -k \"node callBackWorker.ts\" \"node emailWorker.ts\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@types/node": "^22.13.5",
+    "bullmq": "^5.41.6",
+    "concurrently": "^9.1.2",
+    "dotenv": "^16.4.7",
+    "ioredis": "^5.5.0",
+    "nodemailer": "^6.10.0",
+    "typescript": "^5.7.3"
+  },
+  "devDependencies": {
+    "@types/nodemailer": "^6.4.17"
+  }
+}
