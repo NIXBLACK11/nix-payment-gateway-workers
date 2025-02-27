@@ -24,7 +24,7 @@ const transporter = nodemailer.createTransport({
 const worker = new Worker(
     "emailQueue",
     async (job) => {
-        const { buyerEmail, plan, saasName, logoUrl } = job.data;
+        const { buyerEmail, merchantEmail, plan, saasName, logoUrl } = job.data;
 
         console.log(`📧 Sending email to ${buyerEmail} for ${saasName} - Plan: ${plan}`);
 
@@ -43,7 +43,22 @@ const worker = new Worker(
                 `,
             });
 
+            await transporter.sendMail({
+                from: EMAIL_USER,
+                to: merchantEmail,
+                subject: `🎉 Payment Successful - ${saasName}`,
+                html: `
+                    <div style="font-family: Arial, sans-serif; text-align: center;">
+                        <img src="${logoUrl}" alt="${saasName} Logo" style="max-width: 100px; margin-bottom: 10px;" />
+                        <h2>🎉 Payment Successful!</h2>
+                        <p>${buyerEmail} bout your <strong>${plan}</strong> plan of <strong>${saasName}</strong>.</p>
+                        <p>We appreciate your business! Keep growing!</p>
+                    </div>
+                `,
+            });
+
             console.log(`✅ Email sent successfully to ${buyerEmail}`);
+            console.log(`✅ Email sent successfully to ${merchantEmail}`);
         } catch (error) {
             console.error(`❌ Failed to send email to ${buyerEmail}:`, error);
             throw error;
