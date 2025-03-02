@@ -27,6 +27,7 @@ const worker = new Worker(
         const { buyerEmail, merchantEmail, plan, saasName, logoUrl } = job.data;
 
         console.log(`📧 Sending email to ${buyerEmail} for ${saasName} - Plan: ${plan}`);
+        console.log(`📧 Sending email to ${merchantEmail} for ${saasName} - Plan: ${plan}`);
 
         try {
             await transporter.sendMail({
@@ -51,7 +52,7 @@ const worker = new Worker(
                     <div style="font-family: Arial, sans-serif; text-align: center;">
                         <img src="${logoUrl}" alt="${saasName} Logo" style="max-width: 100px; margin-bottom: 10px;" />
                         <h2>🎉 Payment Successful!</h2>
-                        <p>${buyerEmail} bout your <strong>${plan}</strong> plan of <strong>${saasName}</strong>.</p>
+                        <p>${buyerEmail} bought your <strong>${plan}</strong> plan of <strong>${saasName}</strong>.</p>
                         <p>We appreciate your business! Keep growing!</p>
                     </div>
                 `,
